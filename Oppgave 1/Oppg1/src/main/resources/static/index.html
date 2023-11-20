@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Temperature App</title>
+</head>
+<body>
+<!-- Heading for the Temperature App -->
+<h2>Temperatur App</h2>
+
+<!-- Label and input for entering the month -->
+<label for="monthInput">Skriv inn en måned:</label>
+<input type="text" id="monthInput" placeholder="Skriv Måned...">
+
+<!-- Button to trigger the temperature retrieval -->
+<button onclick="getAverageTemperature()">Få Temp</button>
+
+<!-- Paragraph element to display the result -->
+<p id="result"></p>
+
+<!-- Include jQuery library from a CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- JavaScript code for handling the button click and making AJAX request -->
+<script>
+  function getAverageTemperature() {
+    // Get the value entered in the input field
+    let month = $("#monthInput").val();
+
+    // Use AJAX to make a GET request to the "/getTemperature" endpoint on the server
+    $.ajax({
+      type: "GET",
+      url: "/getTemperature",
+      data: { month: month },
+      success: function (data) {
+        // Update the result paragraph with the average temperature information
+        $("#result").text("Gjennomsnittstemperatur for " + month + ": " + data);
+      },
+      error: function () {
+        // Display an error message if there is an issue retrieving the temperature
+        $("#result").text("Feil ved henting av temperatur.");
+      }
+    });
+  }
+</script>
+</body>
+</html>
